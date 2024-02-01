@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
 ENV_DIR=${3:-}
-build_dir=${1:-}
-npmrc="$(cat $ENV_DIR/NPMRC)"
+BUILD_DIR=${1:-}
+GITHUB_TOKEN="$(cat $ENV_DIR/GITHUB_TOKEN)"
+REPO_USER="$(cat $ENV_DIR/REPO_USER)"
 
-if [ "$npmrc" != "" ]; then
-	echo "-----> Using .npmrc from config var NPMRC"
-	echo "$npmrc" > "$build_dir/.npmrc"
+
+if [ "$GITHUB_TOKEN" != "" ]; then
+	echo "-----> Using .npmrc to install packages from https://npm.pkg.github.com/$REPO_USER"
+	echo "@$REPO_USER:registry=https://npm.pkg.github.com/$REPO_USER" > "$BUILD_DIR/.npmrc"
+	echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> "$BUILD_DIR/.npmrc"
+	echo "//npm.pkg.github.com/$REPO_USER/:_authToken=$GITHUB_TOKEN" >> "$BUILD_DIR/.npmrc"
 	exit 0
 fi
