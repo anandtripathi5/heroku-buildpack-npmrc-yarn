@@ -8,8 +8,7 @@ REPO_USER="$(cat $ENV_DIR/REPO_USER)"
 
 if [ "$GITHUB_TOKEN" != "" ]; then
 	echo "-----> Using .npmrc to install packages from https://npm.pkg.github.com/$REPO_USER"
-	echo "@$REPO_USER:registry=https://npm.pkg.github.com/$REPO_USER" > "$BUILD_DIR/.npmrc"
+	echo "@$REPO_USER:registry=https://npm.pkg.github.com" > "$BUILD_DIR/.npmrc"
 	echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> "$BUILD_DIR/.npmrc"
-	echo "//npm.pkg.github.com/$REPO_USER/:_authToken=$GITHUB_TOKEN" >> "$BUILD_DIR/.npmrc"
 	exit 0
 fi
